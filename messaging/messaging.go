@@ -912,7 +912,7 @@ func newFCMClient(hc *http.Client, conf *internal.MessagingConfig, messagingEndp
 // The Message must specify exactly one of Token, Topic and Condition fields. FCM will
 // customize the message for each target platform based on the arguments specified in the
 // Message.
-func (c *fcmClient) Send(ctx context.Context, message *Message) (string, error) {
+func (c *fcmClient) Send(ctx context.Context, message *Message) (*internal.Response, string, error) {
 	payload := &fcmRequest{
 		Message: message,
 	}
@@ -923,7 +923,7 @@ func (c *fcmClient) Send(ctx context.Context, message *Message) (string, error) 
 //
 // This function does not actually deliver the message to target devices. Instead, it performs all
 // the SDK-level and backend validations on the message, and emulates the send operation.
-func (c *fcmClient) SendDryRun(ctx context.Context, message *Message) (string, error) {
+func (c *fcmClient) SendDryRun(ctx context.Context, message *Message) (*internal.Response, string, error) {
 	payload := &fcmRequest{
 		ValidateOnly: true,
 		Message:      message,
@@ -931,9 +931,9 @@ func (c *fcmClient) SendDryRun(ctx context.Context, message *Message) (string, e
 	return c.makeSendRequest(ctx, payload)
 }
 
-func (c *fcmClient) makeSendRequest(ctx context.Context, req *fcmRequest) (string, error) {
+func (c *fcmClient) makeSendRequest(ctx context.Context, req *fcmRequest) (*internal.Response, string, error) {
 	if err := validateMessage(req.Message); err != nil {
-		return "", err
+		return nil, "", err
 	}
 
 	request := &internal.Request{
@@ -943,8 +943,8 @@ func (c *fcmClient) makeSendRequest(ctx context.Context, req *fcmRequest) (strin
 	}
 
 	var result fcmResponse
-	_, err := c.httpClient.DoAndUnmarshal(ctx, request, &result)
-	return result.Name, err
+	response, err := c.httpClient.DoAndUnmarshal(ctx, request, &result)
+	return response, result.Name, err
 }
 
 // IsInternal checks if the given error was due to an internal server error.
