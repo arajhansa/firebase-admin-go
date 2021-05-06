@@ -23,9 +23,9 @@ import (
 	"net/http"
 	"time"
 
-	firebase "firebase.google.com/go/v4"
-	"firebase.google.com/go/v4/auth"
-	"firebase.google.com/go/v4/auth/hash"
+	firebase "github.com/arajhansa/firebase-admin-go"
+	"github.com/arajhansa/firebase-admin-go/auth"
+	"github.com/arajhansa/firebase-admin-go/auth/hash"
 	"google.golang.org/api/iterator"
 )
 

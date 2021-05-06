@@ -24,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	"firebase.google.com/go/v4/internal"
+	"github.com/arajhansa/firebase-admin-go/internal"
 )
 
 func TestNewIDTokenVerifier(t *testing.T) {

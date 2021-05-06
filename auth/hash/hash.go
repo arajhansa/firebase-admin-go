@@ -21,8 +21,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-
-	"firebase.google.com/go/v4/internal"
+	"github.com/arajhansa/firebase-admin-go/internal"
 )
 
 // InputOrderType specifies the order in which users' passwords/salts are hashed
