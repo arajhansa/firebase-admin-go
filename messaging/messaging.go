@@ -21,13 +21,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/arajhansa/firebase-admin-go/internal"
 	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
-	"firebase.google.com/go/v4/internal"
 	"google.golang.org/api/transport"
 )
 
